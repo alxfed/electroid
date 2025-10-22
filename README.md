@@ -1,10 +1,10 @@
-# Package name
-Package Name
+# Electroid
+`electroid` is a Python library.
 <pre>
-  pip install independent-machine
+  pip install electroid
 </pre>
 Then:
 ```Python
   # Python
-  import independent_machine
+  import electroid
 ```
