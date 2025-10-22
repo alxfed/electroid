@@ -1,5 +1,5 @@
 # Electroid
-`electroid` is a Python library.
+`electroid` is a Python library utilizing the anthropomorphized electric power consumption for tasks at hand.
 <pre>
   pip install electroid
 </pre>
