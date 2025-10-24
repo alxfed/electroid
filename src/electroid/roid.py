@@ -27,7 +27,7 @@ def messages(messages=None, **kwargs):
     """ All parameters should be in kwargs, but they are optional
     """
     json_data = {
-        "model":                kwargs.get("model", message_model),
+        "model":                kwargs.get("model", default_model),
         "system":               kwargs.get("system", "answer concisely"),
         "messages":             messages,
         "max_tokens":           kwargs.get("max_tokens", 1),
@@ -49,12 +49,12 @@ def messages(messages=None, **kwargs):
         else:
             print(f"Request status code: {response.status_code}")
             return None
-        return dump.get("content")
+        return dump.get("content")['text']
 
     except Exception as e:
         print("Unable to generate Message response")
         print(f"Exception: {e}")
-        return None
+        return ''
 
 
 if __name__ == "__main__":
