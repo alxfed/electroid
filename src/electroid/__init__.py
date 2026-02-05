@@ -5,3 +5,8 @@
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
+from .roid import messages
+
+__all__ = [
+    'messages'
+]

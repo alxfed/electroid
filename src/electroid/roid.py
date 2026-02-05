@@ -35,7 +35,7 @@ def messages(messages=None, **kwargs):
         "stream":               kwargs.get("stream", False),
         "temperature":          kwargs.get("temperature", 0.5),
         "top_k":                kwargs.get("top_k", None),
-        "top_p":                kwargs.get("top_p", None),
+        # "top_p":                kwargs.get("top_p", None),
         "metadata":             kwargs.get("metadata", None)
     }
     try:
@@ -49,7 +49,7 @@ def messages(messages=None, **kwargs):
         else:
             print(f"Request status code: {response.status_code}")
             return None
-        return dump.get("content")['text']
+        return dump.get("content")
 
     except Exception as e:
         print("Unable to generate Message response")
