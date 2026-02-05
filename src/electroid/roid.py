@@ -36,7 +36,7 @@ def messages(messages=None, **kwargs):
         "stream":               kwargs.get("stream", False),
         "temperature":          kwargs.get("temperature", 0.5),
         "top_k":                kwargs.get("top_k", None),
-        # "top_p":                kwargs.get("top_p", None),
+        "output_config":        kwargs.get("output_config", {"effort":"low"}),
         "metadata":             kwargs.get("metadata", None)
     }
     try:
