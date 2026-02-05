@@ -12,13 +12,13 @@ api_key             = environ.get("ANTHROPIC_API_KEY")
 organization        = environ.get("ANTHROPIC_ORGANIZATION", "")
 api_base            = environ.get("ANTHROPIC_API_BASE", "https://api.anthropic.com/v1")
 api_type            = environ.get("ANTHROPIC_VERSION", "2023-06-01")
-default_model       = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-haiku-4-5-20251001')
-message_model       = environ.get("ANTHROPIC_MESSAGE_MODEL",'claude-sonnet-4-5-20250929')
+default_model       = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-opus-4-6')
+message_model       = environ.get("ANTHROPIC_MESSAGE_MODEL",'claude-opus-4-6')
 # claude-3-opus-20240229, claude-3-sonnet-20240229
 
 headers = {
     "x-api-key": api_key,
-    "anthropic-version": "2023-06-01",
+    "anthropic-version": api_type,
     "content-type": "application/json"
 }
 
@@ -30,12 +30,12 @@ def messages(messages=None, **kwargs):
         "model":                kwargs.get("model", default_model),
         "system":               kwargs.get("system", "answer concisely"),
         "messages":             messages,
-        "max_tokens":           kwargs.get("max_tokens", 1),
+        "max_tokens":           kwargs.get("max_tokens", 100),
         "stop_sequences":       kwargs.get("stop_sequences",['stop']),
         "stream":               kwargs.get("stream", False),
         "temperature":          kwargs.get("temperature", 0.5),
-        "top_k":                kwargs.get("top_k", 250),
-        "top_p":                kwargs.get("top_p", 0.5),
+        "top_k":                kwargs.get("top_k", None),
+        "top_p":                kwargs.get("top_p", None),
         "metadata":             kwargs.get("metadata", None)
     }
     try:
