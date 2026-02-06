@@ -6,27 +6,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
 from os import environ
-import requests
+import anthropic
 
 api_key             = environ.get("ANTHROPIC_API_KEY")
-organization        = environ.get("ANTHROPIC_ORGANIZATION", "")
-api_base            = environ.get("ANTHROPIC_API_BASE", "https://api.anthropic.com/v1")
-api_type            = environ.get("ANTHROPIC_VERSION", "2023-06-01")
 default_model       = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-opus-4-6')
 message_model       = environ.get("ANTHROPIC_MESSAGE_MODEL",'claude-opus-4-6')
-# claude-3-opus-20240229, claude-3-sonnet-20240229
 
-headers = {
-    "x-api-key": api_key,
-    "anthropic-version": api_type,
-    "content-type": "application/json"
-}
+client = anthropic.Anthropic()
 
 
-def messages(messages=None, **kwargs):
+def cloud(messages=None, **kwargs):
     """ All parameters should be in kwargs, but they are optional
     """
-    json_data = {
+    kwa = {
         "model":                kwargs.get("model", default_model),
         "thinking":             kwargs.get("thinking", "adaptive"),
         "system":               kwargs.get("system", "answer concisely"),
@@ -40,17 +32,8 @@ def messages(messages=None, **kwargs):
         "metadata":             kwargs.get("metadata", None)
     }
     try:
-        response = requests.post(
-            f"{api_base}/messages",
-            headers=headers,
-            json=json_data,
-        )
-        if response.status_code == requests.codes.ok:
-            dump = response.json()
-        else:
-            print(f"Request status code: {response.status_code}")
-            return None
-        return dump.get("content")
+        response = client.messages.create(**kwa)
+        return response.content
 
     except Exception as e:
         print("Unable to generate Message response")
