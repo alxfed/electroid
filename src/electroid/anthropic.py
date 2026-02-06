@@ -8,9 +8,9 @@ LICENSE file in the root directory of this source tree.
 from os import environ
 import anthropic
 
-api_key             = environ.get("ANTHROPIC_API_KEY")
+api_key             = environ.get("ANTHROPIC_API_KEY", '')
 default_model       = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-opus-4-6')
-message_model       = environ.get("ANTHROPIC_MESSAGE_MODEL",'claude-opus-4-6')
+message_model       = environ.get("ANTHROPIC_MESSAGE_MODEL", 'claude-opus-4-6')
 
 client = anthropic.Anthropic()
 
@@ -18,21 +18,21 @@ client = anthropic.Anthropic()
 def cloud(messages=None, **kwargs):
     """ All parameters should be in kwargs, but they are optional
     """
-    kwa = {
-        "model":                kwargs.get("model", default_model),
-        "thinking":             kwargs.get("thinking", "adaptive"),
-        "system":               kwargs.get("system", "answer concisely"),
-        "messages":             messages,
-        "max_tokens":           kwargs.get("max_tokens", 100),
-        "stop_sequences":       kwargs.get("stop_sequences",['stop']),
-        "stream":               kwargs.get("stream", False),
-        "temperature":          kwargs.get("temperature", 0.5),
-        "top_k":                kwargs.get("top_k", 10),
-        "output_config":        kwargs.get("output_config", {"effort":"low"}),
-        "metadata":             kwargs.get("metadata", None)
-    }
+
     try:
-        response = client.messages.create(**kwa)
+        response = client.messages.create(
+            model=kwargs.get("model", default_model),
+            thinking={"type": kwargs.get("thinking", "adaptive")},
+            system=kwargs.get("system", "answer concisely"),
+            messages=messages,
+            max_tokens=kwargs.get("max_tokens", 100),
+            stop_sequences = kwargs.get("stop_sequences", ['stop']),
+            stream = kwargs.get("stream", False),
+            temperature = kwargs.get("temperature", 0.5),
+            top_k = kwargs.get("top_k", 10),
+            output_config = kwargs.get("output_config", {"effort": "low"}),
+            metadata = kwargs.get("metadata", None)
+        )
         return response.content
 
     except Exception as e:

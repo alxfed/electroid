@@ -28,7 +28,7 @@ def messages(messages=None, **kwargs):
     """
     json_data = {
         "model":                kwargs.get("model", default_model),
-        "thinking":             kwargs.get("thinking", "adaptive"),
+        "thinking":             {"type": kwargs.get("thinking", "enabled")},
         "system":               kwargs.get("system", "answer concisely"),
         "messages":             messages,
         "max_tokens":           kwargs.get("max_tokens", 100),
