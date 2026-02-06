@@ -7,13 +7,13 @@ LICENSE file in the root directory of this source tree.
 """
 from os import environ
 import requests
+from .util import discern
 
 api_key             = environ.get("ANTHROPIC_API_KEY")
 organization        = environ.get("ANTHROPIC_ORGANIZATION", "")
 api_base            = environ.get("ANTHROPIC_API_BASE", "https://api.anthropic.com/v1")
 api_type            = environ.get("ANTHROPIC_VERSION", "2023-06-01")
 default_model       = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-opus-4-6')
-message_model       = environ.get("ANTHROPIC_MESSAGE_MODEL",'claude-opus-4-6')
 # claude-3-opus-20240229, claude-3-sonnet-20240229
 
 headers = {
@@ -48,13 +48,14 @@ def messages(messages=None, **kwargs):
             dump = response.json()
         else:
             print(f"Request status code: {response.status_code}")
-            return ['\n\n','','']
-        return dump.get("content")
+            return ['','']
+
+        return discern(dump.get("content"))
 
     except Exception as e:
         print("Unable to generate Message response")
         print(f"Exception: {e}")
-        return ['\n\n','','']
+        return ['','']
 
 
 if __name__ == "__main__":

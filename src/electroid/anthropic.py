@@ -7,10 +7,10 @@ LICENSE file in the root directory of this source tree.
 """
 from os import environ
 import anthropic
+from .util import discern
 
 api_key             = environ.get("ANTHROPIC_API_KEY", '')
 default_model       = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-opus-4-6')
-message_model       = environ.get("ANTHROPIC_MESSAGE_MODEL", 'claude-opus-4-6')
 
 client = anthropic.Anthropic()
 
@@ -31,12 +31,12 @@ def cloud(messages=None, **kwargs):
             output_config=kwargs.get("output_config", {"effort": "low"}),
             metadata=kwargs.get("metadata", None)
         )
-        return response.content
+        return discern(response.content)
 
     except Exception as e:
         print("Unable to generate Message response")
         print(f"Exception: {e}")
-        return ['\n\n','','']
+        return ['','']
 
 
 def stream(messages=None, **kwargs):
@@ -54,12 +54,12 @@ def stream(messages=None, **kwargs):
                 metadata=kwargs.get("metadata", None)
         ) as stream:
             response = stream.get_final_message()
-        return response.content
+        return discern(response.content)
 
     except Exception as e:
         print("Unable to stream the response")
         print(f"Exception: {e}")
-        return ['\n\n','','']
+        return ['','']
 
 
 if __name__ == "__main__":
