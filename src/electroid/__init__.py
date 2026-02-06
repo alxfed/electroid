@@ -7,11 +7,12 @@ LICENSE file in the root directory of this source tree.
 """
 from .roid import messages
 from .anthropic import cloud, stream
-from .util import discern
+from .util import discern, decode
 
 __all__ = [
     'messages',
     'cloud',
     'stream',
-    'discern'
+    'discern',
+    'decode'
 ]
