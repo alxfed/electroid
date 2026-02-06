@@ -15,12 +15,12 @@ def discern(answer):
     for chunk in answer:
         if chunk['type'] == 'text':
             addition = chunk['text']
-            if addition != '\n\n':
+            if addition not in ('\n\n', '\n'):
                 text += addition
-            else:
-                ...
+
         elif chunk['type'] == 'thinking':
-            thoughts += chunk['text']
+            thoughts += chunk['thinking']
+
     return text, thoughts
 
 
@@ -30,10 +30,10 @@ def decode(answer):
     for chunk in answer:
         if chunk.type == 'text':
             addition = chunk.text
-            if addition != '\n\n':
+            if addition not in ('\n\n', '\n'):
                 text += addition
-            else:
-                ...
+
         elif chunk.type == 'thinking':
-            thoughts += chunk.text
+            thoughts += chunk.thinking
+
     return text, thoughts
