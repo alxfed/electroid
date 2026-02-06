@@ -18,7 +18,6 @@ client = anthropic.Anthropic()
 def cloud(messages=None, **kwargs):
     """ All parameters should be in kwargs, but they are optional
     """
-
     try:
         response = client.messages.create(
             model=kwargs.get("model", default_model),
@@ -37,7 +36,30 @@ def cloud(messages=None, **kwargs):
     except Exception as e:
         print("Unable to generate Message response")
         print(f"Exception: {e}")
-        return ''
+        return ['\n\n','','']
+
+
+def stream(messages=None, **kwargs):
+    """ All parameters should be in kwargs, but they are optional
+    """
+    try:
+        with client.messages.stream(
+                model=kwargs.get("model", default_model),
+                thinking={"type": "adaptive"},
+                system=kwargs.get("system", "answer concisely"),
+                messages=messages,
+                max_tokens=kwargs.get("max_tokens", 100),
+                temperature=1.0,
+                output_config=kwargs.get("output_config", {"effort": "low"}),
+                metadata=kwargs.get("metadata", None)
+        ) as stream:
+            response = stream.get_final_message()
+        return response.content
+
+    except Exception as e:
+        print("Unable to stream the response")
+        print(f"Exception: {e}")
+        return ['\n\n','','']
 
 
 if __name__ == "__main__":

@@ -48,13 +48,13 @@ def messages(messages=None, **kwargs):
             dump = response.json()
         else:
             print(f"Request status code: {response.status_code}")
-            return None
+            return ['\n\n','','']
         return dump.get("content")
 
     except Exception as e:
         print("Unable to generate Message response")
         print(f"Exception: {e}")
-        return ''
+        return ['\n\n','','']
 
 
 if __name__ == "__main__":
