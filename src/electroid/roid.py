@@ -28,14 +28,13 @@ def messages(messages=None, **kwargs):
     """
     json_data = {
         "model":                kwargs.get("model", default_model),
-        "thinking":             {"type": kwargs.get("thinking", "enabled")},
+        "thinking":             {"type": "adaptive"},
         "system":               kwargs.get("system", "answer concisely"),
         "messages":             messages,
         "max_tokens":           kwargs.get("max_tokens", 100),
         "stop_sequences":       kwargs.get("stop_sequences",['stop']),
         "stream":               kwargs.get("stream", False),
-        "temperature":          kwargs.get("temperature", 0.5),
-        "top_k":                kwargs.get("top_k", 10),
+        "temperature":          1.0,
         "output_config":        kwargs.get("output_config", {"effort":"low"}),
         "metadata":             kwargs.get("metadata", None)
     }
