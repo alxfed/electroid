@@ -5,7 +5,7 @@
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
-from .roid import respond
+from .rest import respond
 from .util import discern, decode
 
 __all__ = [

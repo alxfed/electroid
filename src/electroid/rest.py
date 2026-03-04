@@ -23,13 +23,13 @@ headers = {
 }
 
 
-def respond(messages=None, **kwargs):
+def respond(messages=None, instructions=None, **kwargs):
     """ All parameters should be in kwargs, but they are optional
     """
     json_data = {
         "model":                kwargs.get("model", default_model),
         "thinking":             {"type": "adaptive"},
-        "system":               kwargs.get("system", "answer concisely"),
+        "system":               kwargs.get("system_instruction", instructions),
         "messages":             messages,
         "max_tokens":           kwargs.get("max_tokens", 100),
         "stop_sequences":       kwargs.get("stop_sequences",['stop']),
