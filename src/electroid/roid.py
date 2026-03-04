@@ -23,7 +23,7 @@ headers = {
 }
 
 
-def messages(messages=None, **kwargs):
+def respond(messages=None, **kwargs):
     """ All parameters should be in kwargs, but they are optional
     """
     json_data = {
