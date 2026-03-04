@@ -17,7 +17,6 @@ classifiers=[
 ]
 keywords = ["electroid"]
 dependencies = [
-    "anthropic >= 0.78.0",
     "requests >= 2.32.5",
     "urllib3 >= 1.26.5"
 ]
