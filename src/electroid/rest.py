@@ -9,23 +9,23 @@ from os import environ
 import requests
 from .util import discern
 
-api_key             = environ.get("ANTHROPIC_API_KEY")
-organization        = environ.get("ANTHROPIC_ORGANIZATION", "")
-api_base            = environ.get("ANTHROPIC_API_BASE", "https://api.anthropic.com/v1")
-api_type            = environ.get("ANTHROPIC_VERSION", "2023-06-01")
-default_model       = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-opus-4-6')
-# claude-3-opus-20240229, claude-3-sonnet-20240229
-
-headers = {
-    "x-api-key": api_key,
-    "anthropic-version": api_type,
-    "content-type": "application/json"
-}
-
 
 def respond(messages=None, instructions=None, **kwargs):
     """ All parameters should be in kwargs, but they are optional
     """
+    api_key = environ.get("ANTHROPIC_API_KEY")
+    organization = environ.get("ANTHROPIC_ORGANIZATION", "")
+    api_base = environ.get("ANTHROPIC_API_BASE", "https://api.anthropic.com/v1")
+    api_type = environ.get("ANTHROPIC_VERSION", "2023-06-01")
+    default_model = environ.get("ANTHROPIC_DEFAULT_MODEL", 'claude-opus-4-6')
+    # claude-3-opus-20240229, claude-3-sonnet-20240229
+
+    headers = {
+        "x-api-key": api_key,
+        "anthropic-version": api_type,
+        "content-type": "application/json"
+    }
+
     json_data = {
         "model":                kwargs.get("model", default_model),
         "thinking":             {"type": "adaptive"},
