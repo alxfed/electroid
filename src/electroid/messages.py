@@ -41,9 +41,10 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
     while True:
         result = query(payload, '/messages')
         completion_message = result['content']
-        messages.append(result)
         thoughts, text, function_calls = decode(completion_message)
         if function_calls:
+            payload['messages'].append({"role": "assistant", "content": completion_message})
+            tools_results = []
             # Call all requested functions and create response messages.
             for function_call in function_calls:
                 call_id = function_call.get('id')
@@ -53,13 +54,16 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
                 func = get_function(func_name)
                 func_args = get_func_args(func_args_def)
                 result = call_function(func, func_args)
-
                 tool_message = {
                     "type": "tool_result",
                     "tool_use_id": call_id,
                     "content": result
                 }
-                messages.append(tool_message)
+                tools_results.append(tool_message)
+
+            # Add results to payload and make a query.
+            payload['messages'].append({"role": "user", "content": tools_results})
+
         else:
             break
 
