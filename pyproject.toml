@@ -5,6 +5,7 @@ build-backend = "setuptools.build_meta"
 name = "electroid"
 version = "0.0.20"
 authors = [
+    {name="Machina Ratiocinatrix", email="machina.ratio@gmail.com"},
     {name="Alexander Fedotov", email="alex.fedotov@aol.com"},
 ]
 description = "Anthropomorphized electric power consumption."
