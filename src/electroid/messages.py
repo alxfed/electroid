@@ -5,8 +5,17 @@
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 """
-from os import environ
-from .utils import *
+from .utils import (query,
+                    decode,
+                    default_model,
+                    get_function,
+                    get_func_args,
+                    call_function)
+
+
+def get_weather(location):
+    # print(f"Executing weather tool for location: {location}")
+    return {"temperature": "72F", "condition": "Sunny"}
 
 
 def message(messages=None, instructions=None, tools=None, **kwargs):
@@ -55,25 +64,6 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
             break
 
     return thoughts, text
-
-    # try:
-    #     response = requests.post(
-    #         f"{api_base}/messages",
-    #         headers=headers,
-    #         json=json_data,
-    #     )
-    #     if response.status_code == requests.codes.ok:
-    #         dump = response.json()
-    #     else:
-    #         print(f"Request status code: {response.status_code}")
-    #         return ['','']
-    #
-    #     return discern(dump.get("content"))
-    #
-    # except Exception as e:
-    #     print("Unable to generate Message response")
-    #     print(f"Exception: {e}")
-    #     return ['','']
 
 
 if __name__ == "__main__":
