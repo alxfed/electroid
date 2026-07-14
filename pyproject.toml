@@ -3,7 +3,7 @@ requires = ["setuptools>=67.0"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "electroid"
-version = "0.0.19"
+version = "0.0.20"
 authors = [
     {name="Alexander Fedotov", email="alex.fedotov@aol.com"},
 ]
@@ -16,10 +16,6 @@ classifiers=[
         "Operating System :: OS Independent",
 ]
 keywords = ["electroid"]
-dependencies = [
-    "requests >= 2.32.5",
-    "urllib3 >= 1.26.5"
-]
 
 [project.urls]
 "Homepage" = "https://github.com/alxfed/electroid"
