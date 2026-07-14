@@ -25,6 +25,11 @@ headers = {
 }
 
 
+def get_weather(location):
+    # print(f"Executing weather tool for location: {location}")
+    return {"temperature": "72F", "condition": "Sunny"}
+
+
 def get_function(func_name):
     # Look up tool by name in globals
     func = globals().get(func_name)
@@ -41,9 +46,8 @@ def get_function(func_name):
     return func
 
 
-def get_func_args(func_def):
+def get_func_args(func_args_str):
     try:
-        func_args_str = func_def.get('arguments')
         if isinstance(func_args_str, str):
             func_args = json.loads(func_args_str)
         else:
