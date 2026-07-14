@@ -27,7 +27,6 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
     }
     if tools:
         payload['tools'] = tools
-        payload['parallel_tool_calls'] = True
         payload['tool_choice'] = kwargs.get('tool_choice', {})
 
     while True:
