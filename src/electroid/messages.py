@@ -17,12 +17,12 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
         "model":                kwargs.get("model", default_model),
         "system":               kwargs.get("system_instruction", instructions),
         "messages":             kwargs.get('messages', messages),
-        "thinking":             kwargs.get('thinking', {"type": "adaptive"}),
+        "thinking":             kwargs.get('thinking', None),
         "max_tokens":           kwargs.get("max_tokens", 100),
         "stop_sequences":       kwargs.get("stop_sequences",['stop']),
         "stream":               kwargs.get("stream", False),
         "temperature":          1.0,
-        "output_config":        kwargs.get("output_config", {"effort":"low"}),
+        "output_config":        kwargs.get("output_config", None),
         "metadata":             kwargs.get("metadata", None)
     }
     if tools:
@@ -32,12 +32,9 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
 
     while True:
         result = query(payload, '/messages')
-        completion_message = result['choices'][0]['message']
-        messages.append(completion_message)
-        thoughts = completion_message.get('reasoning_content', '')
-        text = completion_message.get('content', '')
-        function_calls = completion_message.get('tool_calls', [])
-
+        completion_message = result['content']
+        messages.append(result)
+        thoughts, text, function_calls = decode(completion_message)
         if function_calls:
             # Call all requested functions and create response messages.
             for function_call in function_calls:

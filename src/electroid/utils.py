@@ -103,27 +103,10 @@ def query(payload, url_suffix):
         return {}
 
 
-def discern(answer):
-    """Takes an Anthropic answer and converts it into text and thoughts.
-    """
+def decode(output):
     text = ''
     thoughts = ''
-    for chunk in answer:
-        if chunk['type'] == 'text':
-            addition = chunk['text']
-            if addition not in ('\n\n', '\n'):
-                text += addition
-
-        elif chunk['type'] == 'thinking':
-            thoughts += chunk['thinking']
-
-    return text, thoughts
-
-
-def decode(answer):
-    text = ''
-    thoughts = ''
-    for chunk in answer:
+    for chunk in output:
         if chunk.type == 'text':
             addition = chunk.text
             if addition not in ('\n\n', '\n'):
@@ -131,5 +114,6 @@ def decode(answer):
 
         elif chunk.type == 'thinking':
             thoughts += chunk.thinking
+    function_calls = [part for part in output if part['type'] == 'function_call']
 
-    return text, thoughts
+    return text, thoughts, function_calls
