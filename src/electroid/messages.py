@@ -28,7 +28,7 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
     if tools:
         payload['tools'] = tools
         payload['parallel_tool_calls'] = True
-        payload['tool_choice'] = 'auto'
+        payload['tool_choice'] = kwargs.get('tool_choice', {})
 
     while True:
         result = query(payload, '/messages')
@@ -47,8 +47,8 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
                 result = call_function(func, func_args)
 
                 tool_message = {
-                    "role": "tool",
-                    "tool_call_id": call_id,
+                    "type": "tool_result",
+                    "tool_use_id": call_id,
                     "content": result
                 }
                 messages.append(tool_message)
