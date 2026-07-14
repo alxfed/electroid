@@ -107,13 +107,14 @@ def decode(output):
     text = ''
     thoughts = ''
     for chunk in output:
-        if chunk.type == 'text':
-            addition = chunk.text
+        chunk_type = chunk.get('type', '')
+        if chunk_type == 'text':
+            addition = chunk.get('text', '')
             if addition not in ('\n\n', '\n'):
                 text += addition
 
-        elif chunk.type == 'thinking':
-            thoughts += chunk.thinking
+        elif chunk_type == 'thinking':
+            thoughts += chunk.get('thinking', '')
     function_calls = [part for part in output if part['type'] == 'function_call']
 
     return text, thoughts, function_calls

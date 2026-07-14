@@ -22,7 +22,7 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
         "stop_sequences":       kwargs.get("stop_sequences",['stop']),
         "stream":               kwargs.get("stream", False),
         "temperature":          1.0,
-        "output_config":        kwargs.get("output_config", None),
+        "output_config":        kwargs.get("output_config", {}),
         "metadata":             kwargs.get("metadata", None)
     }
     if tools:
