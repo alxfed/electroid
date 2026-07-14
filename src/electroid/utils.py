@@ -115,6 +115,6 @@ def decode(output):
 
         elif chunk_type == 'thinking':
             thoughts += chunk.get('thinking', '')
-    function_calls = [part for part in output if part['type'] == 'function_call']
+    function_calls = [part for part in output if part['type'] == 'tool_use']
 
-    return text, thoughts, function_calls
+    return thoughts, text, function_calls

@@ -39,12 +39,11 @@ def message(messages=None, instructions=None, tools=None, **kwargs):
             # Call all requested functions and create response messages.
             for function_call in function_calls:
                 call_id = function_call.get('id')
-                func_def = function_call.get('function')
-                func_name = func_def.get('name', '')
-
+                func_name = function_call.get('name', '')
+                func_args_def = function_call('input', '')
                 # Look up tool by name in globals and caller frames
                 func = get_function(func_name)
-                func_args = get_func_args(func_def)
+                func_args = get_func_args(func_args_def)
                 result = call_function(func, func_args)
 
                 tool_message = {
